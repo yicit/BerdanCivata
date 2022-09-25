@@ -1,0 +1,52 @@
+﻿@page
+@model BerdanCivata.Pages.Clients.IndexModel
+@{
+}
+
+<br>
+<h2>List of Clients</h2>
+<a class='btn btn-primary btn-sm' href='/Clients/Create'> New Client </a>
+<table class ="table">
+    <thead>
+        <tr>
+            <th> ID </th>
+            <th> Name </th>
+            <th> Email </th>
+            <th> Phone </th>
+            <th> Address </th>
+            <th> Created At </th>
+            <th> Image</th>
+            <th> Action </th>
+         </tr >
+     </thead >
+     <tbody>
+        @* Get the data from table and reflect to webpage *@
+         @foreach(var item in Model.listCliens){
+
+             <tr>
+                 <td>@item.id</td>
+                 <td>@item.name</td>
+                 <td>@item.email</td>
+                 <td>@item.phone</td>
+                 <td>@item.address</td>
+                 <td>@item.created_at</td>
+                 <td>
+                    @* To reflect image in table which is in the binary form and convert to image to web page *@
+                    @{
+                        if (item.imageCol != null)
+                        {
+                            string imageBase64 = Convert.ToBase64String(item.imageCol);
+                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                            <img src="@imageSrc" width="100" height="100" />
+                        }
+                    }
+                 </td>
+         
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Clients/Edit?id=@item.id"> Edit </a>
+                    <a class="btn btn-danger btn-sm" href="/Clients/Delete?id=@item.id"> Delete </a>
+                </td>
+             </tr>
+         }
+     </tbody>
+</table>
